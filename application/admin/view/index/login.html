@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>后台管理系统</title>
+<link rel="stylesheet" href="/admin/css/admin.css" />
+<link rel="stylesheet" href="/admin/layui/css/layui.css">
+<style>
+#login{
+	
+background-image:url('/admin/image/banner_bg.jpg') ;
+	background-size:cover;
+	
+}
+
+</style>
+
+</head>
+<body id="login">
+<div class="login layui-anim  layui-anim-scaleSpring"  style="border-radius:10px;background:rgba(41,39,34,0.5);">
+<h2 style="color:white;">后台管理系统</h2>
+<form class="layui-form" method="post" >
+<div class="layui-form-item">
+<input type="text" name="username" placeholder="请输入用户名" required lay-verify="required" autocomplete="off" class="layui-input">
+</div>
+<div class="layui-form-item">
+
+<input type="password" name="password" placeholder="请输入密码" required lay-verify="required" autocomplete="off" class="layui-input">
+</div>
+<div class="layui-form-item">
+<button style="padding: 0 102px;" class="layui-btn" lay-submit lay-filter="form">立即登录</button>
+</div>
+</form>
+<script src="/admin/layui/layui.js"></script>
+<script>
+layui.use('form', function(){
+  var form = layui.form;
+  
+  form.on('submit(form)', function(data){
+	  console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+	  console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+	  console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+	  location.href="{:url('index/index')}";
+	  return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+	});
+  
+});
+</script>
+</div>
+</body>
+</html>

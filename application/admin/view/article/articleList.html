@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>文章管理</title>
+<link rel="stylesheet" type="text/css" href="/admin/layui/css/layui.css" />
+</head>
+<style type="text/css">
+.flex-row {
+	display: flex;
+	align-items: center;
+}
+</style>
+
+<body  style="scroll-x:scroll;">
+	<blockquote class="layui-elem-quote flex-row">
+		<input style="width: 200px; margin-right: 15px;" type="text"
+			name="title" placeholder="请输入文章名" autocomplete="off"
+			class="layui-input">
+		<button class="layui-btn">
+			<i class="layui-icon">&#xe615;</i>查询
+		</button>
+		<button class="layui-btn layui-btn-normal">
+			<i class="layui-icon">&#xe654;</i>新增文章
+		</button>
+		<button class="layui-btn layui-btn-danger">
+			<i class="layui-icon">&#xe640;</i>批量删除
+		</button>
+	</blockquote>
+	<table class="layui-table"  id="table"  >
+	</table>
+
+	<!--<div style="position: absolute; left: 50%; top:50%;margin-top:-30px; margin-left:-63px; text-align: center;">
+			<i class="layui-icon" style="font-size: 36px;color: #009688;">&#xe69c;</i>
+			<p>这里一篇文章都没有</p>			
+		</div>-->
+	<script src="/admin/js/jquery-3.2.1.min.js"></script>
+    <script src="/admin/layui/layui.js"></script>
+	<script type="text/javascript">
+		layui.use([ 'table', 'layer' ], function() {
+			var table = layui.table;
+			var layer=layui.layer;				
+			var init= layer.load(2, {shade: false});
+			 table.render({
+			        elem:"#table",	
+			        width:"auto",
+			        url: "{:url('article/articleList')}",
+			        cols:[[
+			         {checkbox: true},
+			         {field: 'id', title: 'ID', },
+			         {field: 'username', title: '用户名', },
+			         {field: 'sex', title: '性別', },
+			         {field: 'city', title: '城市', },
+			         {field: 'sign', title: '签名', },
+			         {field: 'experience', title: '积分', },
+			         {field: 'logins', title: '登录次数', },
+			         {field: 'wealth', title: '财富', },
+			         {field: 'classify', title: '职业', },
+			         {field: 'score', title: '评分', },
+			         {field: 'score', title: '操作', width:250, toolbar: '#barDemo'}
+			        ]],
+				   page:true,
+				   done: function(res, curr, count){ //res:返回的数据  curr:当前页码  count：数据总量
+			        layer.close(init)
+			    }
+				});
+			
+		});
+	</script>
+<script type="text/html" id="barDemo">
+  <button class="layui-btn layui-btn-xs" lay-event="detail">查看</button>
+  <button class="layui-btn layui-btn-xs" lay-event="edit">编辑</button>
+  <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button>
+  
+  <!-- 这里同样支持 laytpl 语法，如： -->
+
+</script>
+</body>
+
+</html>
