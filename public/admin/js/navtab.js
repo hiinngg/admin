@@ -79,7 +79,7 @@ layui.define(['element'], function (exports) {
         // 若不存在  
         if (tabIndex === -1) {     //要新增
             globalTabIdIndex++;
-            var content = '<iframe src="' + data.href + '" id="' + globalTabIdIndex + '"    style="border:0;width:100%;height:inherit;" ></iframe>';
+            var content = '<iframe src="' + data.href + '" id="' +globalTabIdIndex+ '"    frameborder="0"  scrolling="auto"  style="width:100%;height:95%;" ></iframe>';
             var title = '';
             // 若icon有定义
            /* if (data.icon !== undefined) {

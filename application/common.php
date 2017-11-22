@@ -28,3 +28,21 @@ function httpGet($url)
     
     return $res;
 }
+
+function transOneImage($path, $width = "640", $height = "")
+{
+    $newimg = str_replace("/temp/", "/image/", $path);
+    $arr=explode('/', $newimg);
+    $datefloder = './image/'.$arr[2];
+    if (!file_exists($datefloder)) {
+        mkdir($datefloder);
+    }
+    
+    $image = \think\Image::open(".".$path);
+  
+    $image->thumb($width, $height == "" ? $image->height() : $height)
+        ->save(".".$newimg);
+    return $newimg;
+}
+
+
