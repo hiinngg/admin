@@ -1,0 +1,204 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "b80fead96b96ba068fd3a2191b66b746",
+    "packages": [
+        {
+            "name": "mobiledetect/mobiledetectlib",
+            "version": "2.8.28",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/serbanghita/Mobile-Detect.git",
+                "reference": "65cd802dad5e85cb8f0ab1ba54ae5fdca765062b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/serbanghita/Mobile-Detect/65cd802dad5e85cb8f0ab1ba54ae5fdca765062b.zip",
+                "reference": "65cd802dad5e85cb8f0ab1ba54ae5fdca765062b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8|5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Mobile_Detect.php"
+                ],
+                "psr-0": {
+                    "Detection": "namespaced/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Serban Ghita",
+                    "email": "serbanghita@gmail.com",
+                    "homepage": "http://mobiledetect.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Mobile_Detect is a lightweight PHP class for detecting mobile devices. It uses the User-Agent string combined with specific HTTP headers to detect the mobile environment.",
+            "homepage": "https://github.com/serbanghita/Mobile-Detect",
+            "keywords": [
+                "detect mobile devices",
+                "mobile",
+                "mobile detect",
+                "mobile detector",
+                "php mobile detect"
+            ],
+            "time": "2017-12-09T09:59:47+00:00"
+        },
+        {
+            "name": "topthink/framework",
+            "version": "v5.0.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/top-think/framework.git",
+                "reference": "0fb51680e8d62495d27f17a0e6cf889b763a6d3c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/top-think/framework/0fb51680e8d62495d27f17a0e6cf889b763a6d3c.zip",
+                "reference": "0fb51680e8d62495d27f17a0e6cf889b763a6d3c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "topthink/think-installer": "~1.0"
+            },
+            "require-dev": {
+                "johnkary/phpunit-speedtrap": "^1.0",
+                "mikey179/vfsstream": "~1.6",
+                "phpdocumentor/reflection-docblock": "^2.0",
+                "phploc/phploc": "2.*",
+                "phpunit/phpunit": "4.8.*",
+                "sebastian/phpcpd": "2.*"
+            },
+            "type": "think-framework",
+            "autoload": {
+                "psr-4": {
+                    "think\\": "library/think"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "liu21st",
+                    "email": "liu21st@gmail.com"
+                }
+            ],
+            "description": "the new thinkphp framework",
+            "homepage": "http://thinkphp.cn/",
+            "keywords": [
+                "framework",
+                "orm",
+                "thinkphp"
+            ],
+            "time": "2017-11-06T01:19:03+00:00"
+        },
+        {
+            "name": "topthink/think-image",
+            "version": "v1.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/top-think/think-image.git",
+                "reference": "8586cf47f117481c6d415b20f7dedf62e79d5512"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/top-think/think-image/8586cf47f117481c6d415b20f7dedf62e79d5512.zip",
+                "reference": "8586cf47f117481c6d415b20f7dedf62e79d5512",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.8.*",
+                "topthink/framework": "^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "think\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "yunwuxin",
+                    "email": "448901948@qq.com"
+                }
+            ],
+            "description": "The ThinkPHP5 Image Package",
+            "time": "2016-09-29T06:05:43+00:00"
+        },
+        {
+            "name": "topthink/think-installer",
+            "version": "v1.0.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/top-think/think-installer.git",
+                "reference": "1be326e68f63de4e95977ed50f46ae75f017556d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/top-think/think-installer/1be326e68f63de4e95977ed50f46ae75f017556d.zip",
+                "reference": "1be326e68f63de4e95977ed50f46ae75f017556d",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.*@dev"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "think\\composer\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "think\\composer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "yunwuxin",
+                    "email": "448901948@qq.com"
+                }
+            ],
+            "time": "2017-05-27T06:58:09+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=5.4.0"
+    },
+    "platform-dev": []
+}

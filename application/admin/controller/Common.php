@@ -11,7 +11,6 @@ use think\Session;
  */
 class Common extends Controller
 {
-
     public function _initialize()
     {
         if (Session::has("admin")) {

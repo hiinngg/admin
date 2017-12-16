@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>文章管理</title>
+<title>新闻管理</title>
 <link rel="stylesheet" type="text/css" href="/admin/layui/css/layui.css" />
 </head>
 <style type="text/css">
@@ -16,46 +16,53 @@
 <body  style="scroll-x:scroll;">
 	<blockquote class="layui-elem-quote flex-row">
 		<input style="width: 200px; margin-right: 15px;" type="text"
-			name="title" placeholder="请输入文章名" autocomplete="off"
+			name="keyword" placeholder="请输入新闻名" autocomplete="off"
 			class="layui-input">
-		<button class="layui-btn">
+		<button class="layui-btn articleSearch" >
 			<i class="layui-icon">&#xe615;</i>查询
 		</button>
 		<button class="layui-btn layui-btn-normal add" data-url="{:url('editArticle')}">
-			<i class="layui-icon">&#xe654;</i>新增文章
+			<i class="layui-icon">&#xe654;</i>新增新闻
 		</button>
-		<button class="layui-btn layui-btn-danger">
+<!-- 		<button class="layui-btn layui-btn-danger">
 			<i class="layui-icon">&#xe640;</i>批量删除
+		</button> -->
+		<button class="layui-btn " onclick="refresh()">
+			刷新
 		</button>
 	</blockquote>
 		
-	<table class="layui-table"  id="table"  style="width:auto;" >
-	</table>
-
-
-
+	
+    {present name="none"}
 	<div style="position: absolute; left: 50%; top:50%;margin-top:-30px; margin-left:-63px; text-align: center;">
 			<i class="layui-icon" style="font-size: 36px;color: #009688;">&#xe69c;</i>
-			<p>这里一篇文章都没有</p>			
+			<p>这里一篇新闻都没有</p>			
 		</div>
-	
+		{else/}
+		<table class="layui-table"  id="table"  lay-filter="table" style="width:auto;" >
+	    </table>
+	{/present}
     <script src="/admin/layui/layui.js"></script>
 	<script type="text/javascript">
-		layui.use([ 'table', 'layer','jquery' ], function() {
+	var getlistUrl= "{:url('article/articleList')}";
+	
+	
+		layui.use([ 'table', 'layer','jquery','form' ], function() {
 			var $=layui.jquery;
 			var table = layui.table;
-			var layer=layui.layer;				
+			var layer=layui.layer;		
+			var form = layui.form
+		{notpresent name="none"}
 			var init= layer.load(2, {shade: false});
-			 table.render({
-			        elem:"#table",	
-			       
-			        url: "{:url('article/articleList')}",
+		var articleTable = table.render({
+			        elem:"#table",			       
+			        url:getlistUrl,
 			        cols:[[
 			         {checkbox: true},
-			         {field: 'postid', title: '编号',type:"numbers" },
+			         {field: 'postid', title: '编号' },
 			         {field: 'title', title: '标题' },
 			         {field: 'des', title: '描述' },
-			         {field: 'is_valid', title: '状态',toolbar: '#status' },
+			         {field: 'is_valid', title: '状态',templet: '#statusTpl' },
 			         {field: 'created_at', title: '创建时间' },
 			         {field: 'score', title: '操作', width:250, toolbar: '#bar'}
 			        ]],
@@ -64,33 +71,143 @@
 			        layer.close(init)
 			    }
 				});
+			 
+			 
+			 $(".articleSearch").on("click",function(){
+				 var keyword=$("input[name='keyword']").val();
+				 if(keyword==""){
+					 return;
+				 }
+				 articleTable.reload({
+					  where: { 
+					    keyword:keyword
+					  }
+					  ,page: {
+					    curr: 1 //重新从第 1 页开始
+					  }
+					});
+				 
+			 })
+			 
+			 
+			{/notpresent}
+	
 			
 				$(".add").on("click",function(){			
 					var data = {
-							title:"编辑内容",
+							title:"新增新闻",
 							href : $(this).attr("data-url")
 						}
 					window.parent.navtab.tabAdd(data)
 					
 				})
-			 
+				table.on('tool(table)', function(obj){ 
+					  var data = obj.data;
+					  var layEvent = obj.event; 
+					  var tr = obj.tr;
+					  var dtd=$.Deferred();
+					  if(layEvent === 'detail'){ 
+						  layer.open({
+						      type: 2,
+						      title: '内容查看',
+						      shadeClose: true,
+						      shade: false,
+						      maxmin: true, //开启最大化最小化按钮
+						      area: ['893px', '600px'],
+						      content: "articlePreview?id="+data.postid
+						    });
+
+					  } else if(layEvent === 'del'){ //删除
+					    layer.confirm('确定删除该新闻么', function(index){
+					    	  _ajax("{:url('articleDel')}",{postid:data.postid},dtd)
+							  dtd.done(function(){
+								  obj.del(); 
+								  layer.close(index);
+							  })
+					    });
+					  } else if(layEvent === 'edit'){ //编辑
+						  layer.open({
+						      type: 2,
+						      title: '内容编辑',
+						      shadeClose: true,
+						      shade: false,
+						      maxmin: true, //开启最大化最小化按钮
+						      area: ['893px', '600px'],
+						      content: "articleEdit?id="+data.postid
+						    });
+					    
+					  }else if(layEvent === 'change2on'){
+						  _ajax("{:url('statusChange')}",{postid:data.postid,status:1},dtd)
+						  dtd.done(function(){
+							  $(tr).find("button.on").get(0).outerHTML='<button class="layui-btn layui-btn-warm layui-btn-xs off" lay-event="change2off">撤销发布</button>'
+								  obj.update({
+									  is_valid:1
+						       });
+						  })
+							
+					  }else if(layEvent === 'change2off'){
+						  _ajax("{:url('statusChange')}",{postid:data.postid,status:0},dtd)
+						 dtd.done(function(){
+					     $(tr).find("button.off").get(0).outerHTML='<button class="layui-btn layui-btn-xs on" lay-event="change2on">发布</button>'
+						  obj.update({
+							is_valid:0
+						 });
+						  })
+					
+					  }
+					});
+				
+				function  _ajax(url,data,deferred){
+					var index = layer.load(2, {shade: false});
+					$.ajax({
+						url:url,
+						data:data,
+						type:"post",
+						success:function(data){
+							layer.close(index)
+							if(data==1){
+								deferred.resolve();
+							}else{
+								layer.msg("操作失败");
+							}
+							
+						}
+						
+					})
+					
+					
+				}
+				 
 		});
 	
+	function refresh(){
+		history.go(0)
+	}
+	
+
 		
 		
 	</script>
 <script type="text/html" id="bar">
   <button class="layui-btn layui-btn-xs" lay-event="detail">查看</button>
   <button class="layui-btn layui-btn-xs" lay-event="edit">编辑</button>
+  {{#  if(d.is_valid == 1){ }}
+   <button class="layui-btn layui-btn-warm layui-btn-xs off" lay-event="change2off">撤销发布</button>
+  {{#  } else { }}
+    <button class="layui-btn layui-btn-xs on" lay-event="change2on">发布</button>
+  {{#  } }}
+
   <button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button>
-  
+ 
   <!-- 这里同样支持 laytpl 语法，如： -->
 
 </script>
-<script type="text/html" id="status">
-<input type="checkbox" name="yyy" lay-skin="switch" lay-text="发布|不发布" checked>
-  <!-- 这里同样支持 laytpl 语法，如： -->
-
+<script type="text/html" id="statusTpl">
+  {{#  if(d.is_valid == 1){ }}
+    <span style="color:#5FB878;">发布中</span>
+  {{#  } else { }}
+     <span style="color:#FFB800;">未发布</span>
+  {{#  } }}
 </script>
 </body>
 

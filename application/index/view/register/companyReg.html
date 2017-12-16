@@ -1,0 +1,90 @@
+<h2  class="text-center">企业注册</h2>
+<div class="container ">
+<form  class="layui-form sever" >
+    <div class="layui-form-item">
+    <label class="layui-form-label" style="width:auto;">企业名称：</label>
+    <div class="layui-input-block" style="width:320px;">
+      <input type="text" name="name" required  lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+   <div class="layui-form-item">
+    <label class="layui-form-label" style="width:auto;">登录密码：</label>
+    <div class="layui-input-block"  style="width:320px;" >
+      <input type="password" name="pwd" required  lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+     <div class="layui-form-item">
+    <label class="layui-form-label" style="width:auto;">确认密码：</label>
+    <div class="layui-input-block" style="width:320px;">
+      <input type="password" name="pwd2" required  lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+   <div class="layui-form-item">
+    <label class="layui-form-label" style="width:auto;display:inline-block;">HR联系电话：</label>
+    <div class="layui-input-block" style="width:320px;display:inline-block;margin-left:0;">
+      <input type="text" name="tel" required  lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+
+<div class="sever" >
+<h4 style="margin-left:15px;margin-bottom:30px;">完成以下信息成为内推企业</h4>
+<div class="layui-form-item">
+    <label class="layui-form-label" style="width:auto;display:inline-block;">公司全称：</label>
+    <div class="layui-input-block" style="width:320px;display:inline-block;margin-left:0;">
+      <input type="text" name="fullName" required  placeholder="请输入" autocomplete="off" class="layui-input">
+    </div>
+</div>
+<p style="margin-left:15px;">办公室照片：</p>
+
+<div class="sever row-center" style="justify-content:flex-start;margin-left:15px;">
+<div style="border:1px solid #c2c2c2; width:300px;height:150px;cursor:pointer;position:relative;" class="text-center companyimg" id="image1">
+<span class="fa fa-plus plus fa-2x " style="line-height:150px;"></span>
+</div>
+
+
+<div style="border:1px solid #c2c2c2; width:300px;height:150px;cursor:pointer;position:relative;margin-left:25px;" class="text-center companyimg" id="image2">
+<span class="fa fa-plus plus fa-2x " style="line-height:150px;"></span>
+</div>
+
+<div style="border:1px solid #c2c2c2; width:300px;height:150px;cursor:pointer;position:relative;margin-left:25px;" class="text-center companyimg" id="image3">
+<span class="fa fa-plus plus fa-2x " style="line-height:150px;"></span>
+</div>
+</div>
+
+</div>
+
+<p class="text-center"> <a class="sever btn btn-primary text-center submit"   data-loading-text="正在提交..." lay-submit lay-filter="companyReg" style="width:150px;border-radius:15px;background:#1881Ec;">提交</a></p>
+
+</form>
+</div>
+
+
+
+<!--注册完成时弹出 -->
+<div class="modal fade"  role="dialog" id="companyReg" style="">
+ <div class="modal-dislog" style="position:absolute; top: 50%;left: 50%;transform: translate(-50%, -50%);">
+     <div class="modal-content">
+        <div class="modal-header">
+        <h4 class="text-center text-success">注册成功！</h4>
+        </div>
+        <div class="modal-body">
+        
+        <p class="text-center text-success"><span class="fa fa-check-circle fa-3x"></span></p>
+       
+          
+        </div>
+        <div class="modal-footer">
+        <a type="button" href="{:url('index/index')}" class="btn btn-default">返回首页</a>
+        <a type="button" href="{:url('companyadmin/index/login')}" class="btn btn-primary">马上登陆</a>
+        <button></button>
+        </div>  
+     
+    </div>
+
+ </div>
+
+</div> 
+<!--注册完成时弹出  -->
+
+

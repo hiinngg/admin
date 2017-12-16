@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>普工招聘编辑</title>
+
+<link rel="stylesheet" type="text/css" href="/admin/layui/css/layui.css" />
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/swiper.min.css" />
+</head>
+<style>
+.label_img{
+	object-fit:cover;
+	width:100%;
+	height:100%;
+}
+.hide{
+	display:none;
+}
+
+.treat>input:checked+label{
+    background-color: #5FB878;
+	color:#ffffff;
+}
+.treat>input:checked+label:after{
+
+}
+.fa-plus{
+	cursor:pointer;
+}
+.hidden{
+	display:none;
+}
+.show{
+	display:block;
+}
+.treat label{
+	cursor:pointer;
+	text-align:center;
+	margin-right:15px;
+	padding:12px 40px;
+	border:1px solid #c2c2c2;
+	border-radius:10px;
+	white-space:nowrap;
+   -webkit-user-select:none;
+   -moz-user-select:none;
+   -ms-user-select:none;
+   user-select:none;
+	margin-bottom:15px;
+}
+.companyimg{
+	position:relative;
+	width:300px;
+	height:150px;
+	border:1px solid #c2c2c2;
+	text-align:center;
+}
+
+</style>
+
+<body style="overflow:scroll;">
+
+<form class="layui-form" action=""  style="width:70%;">
+<p style="font-size:18px;margin:15px 0;">岗位内容</p>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label" >职位名称</label>
+    <div class="layui-input-block" >
+      <input type="text" name="title" required  lay-verify="required" placeholder="请输入职位名称" autocomplete="off" class="layui-input" value="{$data.name??''}">
+    </div>
+  </div>
+  
+   <div class="layui-form-item">
+    <label class="layui-form-label">招聘人数</label>
+    <div class="layui-input-block">
+      <input type="number" name="number" required  lay-verify="required" placeholder="请输入招聘人数" autocomplete="off" class="layui-input" value="{$data.number??''}">
+    </div>
+  </div>
+  
+ <div class="layui-form-item">
+   <div class="layui-inline">
+    <label class="layui-form-label">职位薪酬</label>
+    <div class="layui-input-inline" style="width: 100px;">
+      <input type="text" name="price_min" lay-verify="required"  placeholder="￥" autocomplete="off" class="layui-input" value="{$data.salary_min??''}">
+    </div>
+    <div class="layui-form-mid">-</div>
+    <div class="layui-input-inline" style="width: 100px;">
+      <input type="text" name="price_max" lay-verify="required" placeholder="￥" autocomplete="off" class="layui-input"  value="{$data.salary_max??'' }">
+    </div>
+  </div>
+ </div>
+
+
+ 
+
+  
+  <p style="font-size:18px;margin:15px 0;">岗位福利</p>
+   <div class="layui-form-item" style="width:70%;">
+
+    <div class="layui-input-block treat" style="display:flex;flex-wrap:wrap;" >
+      <input id="c1" type="checkbox"  style="display:none; " name="treat"   value="五险一金"  lay-ignore >
+      <label for="c1"  >五险一金</label>
+      <input id="c2" type="checkbox"  style="display:none; "  name="treat" value="周末双休"  lay-ignore >
+      <label for="c2"  >周末双休</label>
+      <input id="c3" type="checkbox"  style="display:none;"   name="treat" value="员工培训"  lay-ignore >
+      <label for="c3"  >员工培训</label>
+      <input id="c4" type="checkbox"  style="display:none;"   name="treat"  value="员工旅游"  lay-ignore >
+      <label for="c4"  >员工旅游</label>
+      <input id="c5" type="checkbox"  style="display:none;"   name="treat"  value="十三薪"   lay-ignore >
+      <label for="c5"  >十三薪</label>
+      <label id="myprompt"><span class="fa fa-plus"></span></label>
+    </div>
+  </div>
+  
+    <div class="layui-form-item">
+    <label class="layui-form-label">入职补贴</label>
+    <div class="layui-input-block">
+      <input type="radio" name="sex" value="0" title="是">
+      <input type="radio" name="sex" value="1" title="否" >
+    </div>
+  </div>
+  
+   
+   <p style="font-size:18px;margin:15px 0;">工作描述</p>
+    <div class="layui-form-item layui-form-text"  style="width:70%;">
+    <div class="layui-input-block">
+      <textarea name="desc" placeholder="请输入内容" lay-verify="required" class="layui-textarea"></textarea>
+    </div>
+  </div>
+
+   <p style="font-size:18px;margin:15px 0;">工作环境照片</p>
+   
+   <!-- 工厂环境照片，只上传一次 -->
+   <div style="position:relative;width:70%;left:27px;">
+   
+   
+     <div class="swiper-container" style="width:100%;margin-left:0;margin-bottom:30px;">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide companyimg" id="image1" style="">
+	        <span class="fa fa-plus plus fa-2x" style="line-height:150px;"></span>
+	        <button class="layui-btn layui-btn-xs del hidden" style="position:absolute;top:0;right:0;">删除</button>
+        </div>
+       
+        <div class="swiper-slide companyimg" id="image2" style="">
+	        <span class="fa fa-plus plus fa-2x" style="line-height:150px;"></span>
+	        <button class="layui-btn layui-btn-xs del hidden" style="position:absolute;top:0;right:0;">删除</button>
+        </div>
+         <div class="swiper-slide companyimg" id="image3" style="">
+	        <span class="fa fa-plus plus fa-2x" style="line-height:150px;"></span>
+	        <button class="layui-btn layui-btn-xs del hidden" style="position:absolute;top:0;right:0;">删除</button>
+        </div>
+         <div class="swiper-slide companyimg" id="image4" style="">
+	        <span class="fa fa-plus plus fa-2x" style="line-height:150px;"></span>
+	        <button class="layui-btn layui-btn-xs del hidden" style="position:absolute;top:0;right:0;">删除</button>
+        </div>
+         <div class="swiper-slide companyimg" id="image5" style="">
+	        <span class="fa fa-plus plus fa-2x" style="line-height:150px;"></span>
+	        <button class="layui-btn layui-btn-xs del hidden" style="position:absolute;top:0;right:0;">删除</button>
+        </div>
+    </div>
+     </div> 
+   
+    <div class="swiper-button-prev"  style="left:-27px;"></div>
+    <div class="swiper-button-next" style="right:-27px;" ></div>
+   
+   </div>
+   
+  
+    
+   <!-- //照片 -->
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit lay-filter="addPosition">发布招聘</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+  
+    </form>
+    <script type="text/javascript" src="/admin/ueditor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="/admin/ueditor/ueditor.all.js"></script>
+    <!-- 实例化编辑器 -->
+	<script src="/admin/js/jquery-3.2.1.min.js"></script>
+	<script src="/static/js/swiper.min.js"></script>
+	<script src="/admin/layui/layui.js"></script>
+	<script>
+	var images={};
+	var treatNum =$(".treat label:not(#myprompt)").length;
+	var mySwiper = new Swiper ('.swiper-container', {
+		slidesPerView:'auto',
+		spaceBetween : 20,
+	    
+	    // 如果需要前进后退按钮
+	    navigation: {
+	      nextEl: '.swiper-button-next',
+	      prevEl: '.swiper-button-prev',
+	    },
+
+	  })  
+
+	layui.use(['form','upload','layer'], function(){
+		  var form   = layui.form;
+		  var upload = layui.upload;
+		  var layer  = layui.layer;
+		  
+		  $(".treat").children("input").css("display","none")
+		  
+		form.on('submit(addPosition)', function(data){
+			  if(parseInt(data.field['price_min'])>parseInt(data.field['price_max'])){
+					layer.msg("请设置正确的薪酬区间",{icon:5,shift:6})
+					return false;
+			  }
+			    
+	    var  treat=[];
+		$(".treat").children('input').each(function(){
+			if($(this).prop("checked")){
+				treat.push($(this).val())
+			}
+		})
+	    data.field['treat'] = treat
+	    data.field['desc']=data.field['desc'].replace(/\n|\r\n/g,"<br>");
+	    $.ajax({
+	    	url:"{:url('addPosition')}",
+	    	beforeSend:function(){
+	    		layer.load(2)
+	    	},
+	    	data:{data:data.field,image:images},
+	    	type:"post",
+	    	success:function(data){
+	    		if(data==1){
+	    			layer.msg("保存成功")
+	    			setTimeout(function(){
+	    				history.go(0)
+	    			},500)
+	    			
+	    		}
+	    	},
+	    	complete:function(){
+	    		layer.closeAll("loading")
+	    	}
+	    	
+	    }) 
+			    return false;
+			  });
+		  
+		  
+		  
+	  $("#myprompt").click(function(){
+			  var that = $(this)
+			  layer.prompt({title: '请输入福利待遇名称，并确认'}, function(text, index){
+				  treatNum=treatNum+1;
+				  that.before('<input id="c'+treatNum+'" type="checkbox"  style="display:none;" name="treat"  value="'+text+'" lay-ignore >'+
+					      '<label for="c'+treatNum+'"  >'+text+'</label>') 
+			       layer.close(index);
+				});
+		  }) 
+		  upload.render({
+			   elem: '.companyimg',
+			  url: "{:url('imgUpload')}",
+			  field:"image",
+			  multiple:true,
+	         before: function(obj){ 
+					layer.load(2); 
+		      }
+			  ,done: function(res, index, upload){	
+				  layer.closeAll("loading")
+			    if(res.code == 0){			    	
+			    	var item = this.item;	
+			    	images[$(item).attr("id")]=res.src.replace(/\\/g,'/')			    	
+			    	if($(item).children("img").length>0){
+			    		$(item).children("img").attr("src",res.src.replace(/\\/g,'/'));
+			    	}else{
+			    	  	$(item).children("span.plus").addClass("hidden")
+				    	$(item).children("button.del").removeClass("hidden")				    	
+				    	$(item).append('<img   style="object-fit:cover;width:100%;height:100%;"   src="'+res.src.replace(/\\/g,'/')+'"  />')
+				 
+			    	}
+			    }			    
+			  }
+			}); 
+	})
+	$(".del").on("click",function(event){
+		event.stopPropagation();
+		var that = $(this)
+	    var confirm = layer.confirm('确定要移除该图片吗', {
+			  btn: ['确定','取消'] 
+			}, function(){
+				that.parent().children("span.plus").removeClass("hidden");
+		    	that.addClass("hidden");   	
+		    	that.parent().children("img").remove();
+		        delete images[that.parent().attr("id")];
+		        console.log(images)
+		    	layer.close(confirm);		    	
+			})
+	})
+	
+	
+	
+	
+	
+	</script>
+	<!-- <script>
+	 var ue = UE.getEditor('container',{
+		 initialFrameWidth :1000,
+		 initialFrameHeight :300,
+		 zIndex:300	,
+		 pasteplain:true
+	 });
+	layui.use(['form','upload','layer'], function(){
+		  var form   = layui.form;
+		  var upload = layui.upload;
+		  var layer  = layui.layer;
+		  
+		  //监听提交
+		  form.on('submit(formDemo)', function(data){
+	 		if(data.field.label_img==""){
+				layer.msg("请上传封面",{icon:5,shift:6})
+				return false;
+			} 
+			if(ue.getContent()==""){
+				layer.msg("请编辑内容",{icon:5,shift:6})
+				return false;
+			}
+
+	     var url="{:url('editArticle')}";
+	     var data={data:data.field}
+	     data['txt']=ue.getContentTxt();
+		     {present name="data"}
+		     data['postid']="{$$data.postid}"
+		     {/present}
+		    /* layer.msg(JSON.stringify(data.field)); */
+		    $$.ajax({
+		    	url:url,
+		    	data:data,
+		    	type:"POST",
+		    	beforeSend:function(){
+		    	 layer.load(2, {shade: false});
+		    	},
+		    	success:function(data){
+		    		layer.closeAll()
+		    		if(data==1){
+		    			layer.msg("保存成功",{ time: 700 },function(){
+		    			  history.go(0)
+		    			})
+		    		}
+		    	}		    
+		    })
+		    return false;
+		  });
+		  		  
+		  upload.render({
+			   elem: '#cover'
+			  ,url: "{:url('imgUpload')}",
+			  field:"image"
+			  ,done: function(res, index, upload){			  
+			    if(res.code == 0){		
+			     $$("input[name='label_img']").val('/temp/'+res.src.replace(/\\/g,'/'))
+			     if($$(".img").children("img").length>0){
+			    	 $$(".img").children("img").attr("src",'/temp/'+res.src.replace(/\\/g,'/'))
+			     }else{
+			    	 $$(".img").append('<img   style="object-fit:cover;"  width="200px" height="100px"  src="/temp/'+res.src.replace(/\\/g,'/')+'"  />')
+			     }
+			    }			    
+			    //获取当前触发上传的元素，一般用于 elem 绑定 class 的情况，注意：此乃 layui 2.1.0 新增
+			    var item = this.item;
+			    
+			    //文件保存失败
+			    //do something
+			  }
+			});      
+			   
+		  
+		  
+		});
+	</script> -->
+
+</body>
+</html>

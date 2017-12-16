@@ -16,6 +16,7 @@
  */
 function httpGet($url)
 {
+    
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_TIMEOUT, 500);
@@ -29,20 +30,52 @@ function httpGet($url)
     return $res;
 }
 
-function transOneImage($path, $width = "640", $height = "")
+function transOneImage($path, $tgpath, $width = "640", $height = "")
 {
-    $newimg = str_replace("/temp/", "/image/", $path);
-    $arr=explode('/', $newimg);
-    $datefloder = './image/'.$arr[2];
-    if (!file_exists($datefloder)) {
-        mkdir($datefloder);
+    if (! strstr($path, "temp")) {
+        return $path;
+    }
+    $tgpathArr = explode("/", $tgpath);
+    if ($tgpathArr[count($tgpathArr) - 1] == "") {
+        unset($tgpathArr[count($tgpathArr) - 1]);
+        $tgpathArr = implode("/", $tgpathArr);
     }
     
-    $image = \think\Image::open(".".$path);
-  
+    $temp_arr = explode("/", $path);
+    $fileName = $temp_arr[count($temp_arr) - 1];
+    
+    $newimg = $tgpath . "/" . $fileName;
+    
+    $image = \think\Image::open("." . $path);
+    
     $image->thumb($width, $height == "" ? $image->height() : $height)
-        ->save(".".$newimg);
+        ->save("." . $newimg);
     return $newimg;
 }
+
+function delDir($path){
+    $dir = ".".$path;
+    if (is_dir($dir)) {
+        $dh = opendir($dir);
+        while ($file = readdir($dh)) {
+            if ($file != "." && $file != "..") {
+                $fullpath = $dir . "/" . $file;
+                if (!is_dir($fullpath)) {
+                    unlink($fullpath);
+                } else {
+                    deldir($fullpath);
+                }
+            }
+        }
+        closedir($dh);
+        // 删除当前文件夹：
+        if (!rmdir($dir)) {
+            exit();
+            throw new \Exception("删除文件失败");
+        }
+    }
+}
+
+
 
 
