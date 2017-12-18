@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:77:"D:\wamp3\wamp64\www\recruit\public/../application/admin\view\index\login.html";i:1513590543;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +43,7 @@ layui.use(['form','jquery'], function(){
 
   form.on('submit(form)', function(data){
 	  $.ajax({
-		  url:"{:url('login')}",
+		  url:"<?php echo url('login'); ?>",
 		  data:{data:data.field},
 		  type:"post",
 		  beforeSend:function(){
@@ -52,7 +53,7 @@ layui.use(['form','jquery'], function(){
 			  layer.closeAll()
 			if(data==1){
 			setTimeout(function(){ 
-			    window.location.href="{:url('index/index')}";
+			    window.location.href="<?php echo url('index/index'); ?>";
 			   },100); 
 			}else{
 				layer.msg(data)

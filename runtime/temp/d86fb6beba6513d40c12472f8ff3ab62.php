@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:94:"D:\wamp3\wamp64\www\recruit\public/../application/companyadmin\view\position\positionlist.html";i:1513331658;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:94:"D:\wamp3\wamp64\www\recruit\public/../application/companyadmin\view\position\positionlist.html";i:1513588375;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +51,7 @@
 			        cols:[[
 			         {checkbox: true},
 			         {field: 'poid', title: '编号' },
-			         {field: 'title', title: '职位名称' },
+			         {field: 'name', title: '职位名称' },
 			         {field: 'status', title: '状态',templet: '#statusTpl' },
 			         {field: 'createtime', title: '创建时间' },
 			         {field: 'score', title: '操作', width:250, toolbar: '#bar'}
@@ -103,7 +103,7 @@
 						    });
 
 					  } else if(layEvent === 'del'){ //删除
-					    layer.confirm('确定删除该新闻么', function(index){
+					    layer.confirm('确定删除该需求么', function(index){
 					    	  _ajax("<?php echo url('positionDel'); ?>",{poid:data.poid},dtd)
 							  dtd.done(function(){
 								  obj.del(); 

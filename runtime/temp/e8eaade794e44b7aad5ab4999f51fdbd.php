@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:77:"D:\wamp3\wamp64\www\recruit\public/../application/admin\view\index\index.html";i:1513591393;}*/ ?>
 <!DOCTYPE html>
 <html>
 
@@ -50,7 +51,7 @@ a {
 			<!-- 头部区域（可配合layui已有的水平导航） -->
 			<ul class="layui-nav layui-layout-right">
 				<li class="layui-nav-item"><a href="javascript:;"> <img
-						src="http://t.cn/RCzsdCq" class="layui-nav-img"> {$adminuser}
+						src="http://t.cn/RCzsdCq" class="layui-nav-img"> <?php echo $adminuser; ?>
 				</a>
 					<dl class="layui-nav-child">
 						<dd>
@@ -60,7 +61,7 @@ a {
 							<a href="">安全设置</a>
 						</dd>
 					</dl></li>
-				<li class="layui-nav-item"><a href="{:url('index/logout')}">退出</a>
+				<li class="layui-nav-item"><a href="<?php echo url('index/logout'); ?>">退出</a>
 				</li>
 			</ul>
 		</div>
@@ -72,7 +73,7 @@ a {
 					<li class="layui-nav-item layui-this"><a href="#" data-url="">后台首页</a>
 					</li>
 					<li class="layui-nav-item"><a href="#"
-						data-url="{:url('article/articlelist')}">课程管理</a></li>
+						data-url="<?php echo url('article/articlelist'); ?>">课程管理</a></li>
 					<li class="layui-nav-item"><a href="#"
 						data-url="http://www.qq.com">企业管理</a></li>
 					<li class="layui-nav-item"><a href="#"

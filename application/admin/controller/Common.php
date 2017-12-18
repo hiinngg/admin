@@ -13,7 +13,7 @@ class Common extends Controller
 {
     public function _initialize()
     {
-        if (Session::has("admin")) {
+        if (!Session::has("adminuser")) {
             return $this->redirect('index/login');
         }
     }

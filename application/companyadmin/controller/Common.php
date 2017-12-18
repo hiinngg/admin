@@ -17,18 +17,12 @@ class Common extends Controller
     public function _initialize()
     {
         $detect = new \Mobile_Detect();
-        if($detect->isMobile()){
-            
-            
-            
-        }
-        
-        
+        if ($detect->isMobile()) {}
         
         if (! Session::has("cid")) {
             return $this->redirect('index/login');
-        } else {
-            $this->companyid = Session::get("cid");
+        }else{
+        $this->companyid=Session::get("cid");
         }
     }
 }

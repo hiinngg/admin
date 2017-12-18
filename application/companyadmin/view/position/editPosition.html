@@ -101,16 +101,11 @@
    <div class="layui-form-item" style="width:70%;">
 
     <div class="layui-input-block treat" style="display:flex;flex-wrap:wrap;" >
-      <input id="c1" type="checkbox"  style="display:none; " name="treat"   value="五险一金"  lay-ignore >
-      <label for="c1"  >五险一金</label>
-      <input id="c2" type="checkbox"  style="display:none; "  name="treat" value="周末双休"  lay-ignore >
-      <label for="c2"  >周末双休</label>
-      <input id="c3" type="checkbox"  style="display:none;"   name="treat" value="员工培训"  lay-ignore >
-      <label for="c3"  >员工培训</label>
-      <input id="c4" type="checkbox"  style="display:none;"   name="treat"  value="员工旅游"  lay-ignore >
-      <label for="c4"  >员工旅游</label>
-      <input id="c5" type="checkbox"  style="display:none;"   name="treat"  value="十三薪"   lay-ignore >
-      <label for="c5"  >十三薪</label>
+    {volist name="treat" id="vo"}
+      <input id="c{$i}" type="checkbox"  style="display:none; " name="treat"   value="{$vo}"  lay-ignore >
+      <label for="c{$i}"  >{$vo}</label>
+    {/volist}
+
       <label id="myprompt"><span class="fa fa-plus"></span></label>
     </div>
   </div>
@@ -118,8 +113,11 @@
     <div class="layui-form-item">
     <label class="layui-form-label">入职补贴</label>
     <div class="layui-input-block">
-      <input type="radio" name="sex" value="0" title="是">
-      <input type="radio" name="sex" value="1" title="否" >
+    
+    <input class="radio" type="radio" name="subsidy" value="0" title="否" >
+    <input class="radio" type="radio" name="subsidy" value="1" title="是">
+     
+      
     </div>
   </div>
   
@@ -139,11 +137,25 @@
    
      <div class="swiper-container" style="width:100%;margin-left:0;margin-bottom:30px;">
     <div class="swiper-wrapper">
-        <div class="swiper-slide companyimg" id="image1" style="">
+    
+    
+    {volist name="pics" id="vo"}
+    <div class="swiper-slide companyimg" id="image{$i}" style=""> 
+       <span class="fa fa-plus plus fa-2x {neq name="vo" value="$i"}hidden{/neq}" style="line-height:150px;"></span>
+	  <button class="layui-btn layui-btn-xs del {eq name="vo" value="$i"}hidden{/eq}" style="position:absolute;top:0;right:0;">删除</button>
+      {if condition="$vo neq $i"}
+       <img   style="object-fit:cover;width:100%;height:100%;"   src="{$vo}"  />
+      {/if}  
+     </div>  
+   
+    
+    {/volist} 
+    
+    
+  <!--       <div class="swiper-slide companyimg" id="image1" style="">
 	        <span class="fa fa-plus plus fa-2x" style="line-height:150px;"></span>
 	        <button class="layui-btn layui-btn-xs del hidden" style="position:absolute;top:0;right:0;">删除</button>
-        </div>
-       
+        </div>  
         <div class="swiper-slide companyimg" id="image2" style="">
 	        <span class="fa fa-plus plus fa-2x" style="line-height:150px;"></span>
 	        <button class="layui-btn layui-btn-xs del hidden" style="position:absolute;top:0;right:0;">删除</button>
@@ -159,7 +171,7 @@
          <div class="swiper-slide companyimg" id="image5" style="">
 	        <span class="fa fa-plus plus fa-2x" style="line-height:150px;"></span>
 	        <button class="layui-btn layui-btn-xs del hidden" style="position:absolute;top:0;right:0;">删除</button>
-        </div>
+        </div> -->
     </div>
      </div> 
    
@@ -177,7 +189,7 @@
       <button type="reset" class="layui-btn layui-btn-primary">重置</button>
     </div>
   </div>
-  
+
     </form>
     <script type="text/javascript" src="/admin/ueditor/ueditor.config.js"></script>
     <!-- 编辑器源码文件 -->
@@ -187,7 +199,7 @@
 	<script src="/static/js/swiper.min.js"></script>
 	<script src="/admin/layui/layui.js"></script>
 	<script>
-	var images={};
+
 	var treatNum =$(".treat label:not(#myprompt)").length;
 	var mySwiper = new Swiper ('.swiper-container', {
 		slidesPerView:'auto',
@@ -205,30 +217,71 @@
 		  var form   = layui.form;
 		  var upload = layui.upload;
 		  var layer  = layui.layer;
+		
+		  {present name="data"}
 		  
-		  $(".treat").children("input").css("display","none")
+		  //格式化文本域的文字
+		  var desc="{$data.desc}";
+		  var reg=new RegExp("<br>","g"); //创建正则RegExp对象    
+		  desc=desc.replace(reg,"\n");
+		  $("textarea[name='desc']").text(desc)
 		  
+		  //选择radio
+		  $(".radio[value='{$data.is_subsidy}']").prop("checked",true);
+           
+		  //选择待遇多选
+		  $("input[type='checkbox']").prop("checked",true)
+		  
+          form.render()
+		  
+		  {/present}
+	    $(".treat").children("input").css("display","none")
+	    //保存
 		form.on('submit(addPosition)', function(data){
+	     //判断是否设置正确的薪酬区间
 			  if(parseInt(data.field['price_min'])>parseInt(data.field['price_max'])){
 					layer.msg("请设置正确的薪酬区间",{icon:5,shift:6})
 					return false;
 			  }
 			    
+	    
+	    //遍历待遇多选
 	    var  treat=[];
 		$(".treat").children('input').each(function(){
 			if($(this).prop("checked")){
 				treat.push($(this).val())
 			}
 		})
+		
+		
+		//遍历图片
+		var images=[];
+		$(".companyimg").each(function(){
+			if($(this).find("img").length>0){
+				images.push($(this).find("img").attr("src"));
+			}
+			
+		})
+		
+		//对提交数据的处理
 	    data.field['treat'] = treat
 	    data.field['desc']=data.field['desc'].replace(/\n|\r\n/g,"<br>");
+		var url="{:url('addPosition')}";
+		var data={data:data.field,image:images};
+		{present name="data"}
+		url="{:url('positionEdit')}"
+		data['poid']={$data.poid}
+		{/present}
+		
+		
+		//提交给后台处理
 	    $.ajax({
-	    	url:"{:url('addPosition')}",
+	    	url:url,
 	    	beforeSend:function(){
 	    		layer.load(2)
 	    	},
-	    	data:{data:data.field,image:images},
-	    	type:"post",
+	    	data:data,
+	    	type:"post", 
 	    	success:function(data){
 	    		if(data==1){
 	    			layer.msg("保存成功")
@@ -268,8 +321,7 @@
 			  ,done: function(res, index, upload){	
 				  layer.closeAll("loading")
 			    if(res.code == 0){			    	
-			    	var item = this.item;	
-			    	images[$(item).attr("id")]=res.src.replace(/\\/g,'/')			    	
+			    	var item = this.item;			    	
 			    	if($(item).children("img").length>0){
 			    		$(item).children("img").attr("src",res.src.replace(/\\/g,'/'));
 			    	}else{
@@ -284,15 +336,18 @@
 	})
 	$(".del").on("click",function(event){
 		event.stopPropagation();
+		event.preventDefault()
 		var that = $(this)
 	    var confirm = layer.confirm('确定要移除该图片吗', {
 			  btn: ['确定','取消'] 
 			}, function(){
 				that.parent().children("span.plus").removeClass("hidden");
 		    	that.addClass("hidden");   	
-		    	that.parent().children("img").remove();
-		        delete images[that.parent().attr("id")];
-		        console.log(images)
+		    	that.parent ().children("img").remove();
+		/*     	if(images[that.parent().attr("id")]){
+		    		   delete images[that.parent().attr("id")];  
+		    	}  */
+		          
 		    	layer.close(confirm);		    	
 			})
 	})
@@ -302,80 +357,7 @@
 	
 	
 	</script>
-	<!-- <script>
-	 var ue = UE.getEditor('container',{
-		 initialFrameWidth :1000,
-		 initialFrameHeight :300,
-		 zIndex:300	,
-		 pasteplain:true
-	 });
-	layui.use(['form','upload','layer'], function(){
-		  var form   = layui.form;
-		  var upload = layui.upload;
-		  var layer  = layui.layer;
-		  
-		  //监听提交
-		  form.on('submit(formDemo)', function(data){
-	 		if(data.field.label_img==""){
-				layer.msg("请上传封面",{icon:5,shift:6})
-				return false;
-			} 
-			if(ue.getContent()==""){
-				layer.msg("请编辑内容",{icon:5,shift:6})
-				return false;
-			}
 
-	     var url="{:url('editArticle')}";
-	     var data={data:data.field}
-	     data['txt']=ue.getContentTxt();
-		     {present name="data"}
-		     data['postid']="{$$data.postid}"
-		     {/present}
-		    /* layer.msg(JSON.stringify(data.field)); */
-		    $$.ajax({
-		    	url:url,
-		    	data:data,
-		    	type:"POST",
-		    	beforeSend:function(){
-		    	 layer.load(2, {shade: false});
-		    	},
-		    	success:function(data){
-		    		layer.closeAll()
-		    		if(data==1){
-		    			layer.msg("保存成功",{ time: 700 },function(){
-		    			  history.go(0)
-		    			})
-		    		}
-		    	}		    
-		    })
-		    return false;
-		  });
-		  		  
-		  upload.render({
-			   elem: '#cover'
-			  ,url: "{:url('imgUpload')}",
-			  field:"image"
-			  ,done: function(res, index, upload){			  
-			    if(res.code == 0){		
-			     $$("input[name='label_img']").val('/temp/'+res.src.replace(/\\/g,'/'))
-			     if($$(".img").children("img").length>0){
-			    	 $$(".img").children("img").attr("src",'/temp/'+res.src.replace(/\\/g,'/'))
-			     }else{
-			    	 $$(".img").append('<img   style="object-fit:cover;"  width="200px" height="100px"  src="/temp/'+res.src.replace(/\\/g,'/')+'"  />')
-			     }
-			    }			    
-			    //获取当前触发上传的元素，一般用于 elem 绑定 class 的情况，注意：此乃 layui 2.1.0 新增
-			    var item = this.item;
-			    
-			    //文件保存失败
-			    //do something
-			  }
-			});      
-			   
-		  
-		  
-		});
-	</script> -->
 
 </body>
 </html>
